@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet"  href="../style/styles.css"/>
+	</head>
+	<body>
+	  <p id="target"></p>
+	  <script src="../js/d3.js"></script>
+	  <script>
+	  	d3.select('p#target')
+	  	.text('hello');
+	  	
+	  	var data = [10, 15, 30, 50, 60, 90, 110];
+	  	function render(data) {
+	  	  // 进入
+	  	  d3.select('body').selectAll('div.h-bar')
+	  	    .data(data)
+	  	    .enter()
+	  	    .append('div')
+	  	      .attr('class', 'h-bar')
+	  	      .append('span');
+        
+        // 更新
+        d3.select('body').selectAll('div.h-bar')
+          .data(data)
+          // 动态修饰函数有2个形参，分别是d和i, （1）d是与当前图形元素关联的数据的值（2）i是当前图形元素的下标
+          .style('width', function(d) { 
+            return d + 'px';
+          })
+          .select('span')
+            .text(function(d) { // （1）span可以访问到和其父元素一样的数据 （2）所有绑定了数据的父元素， 其子元素均具有从父元素那里继承下来的值
+              return d;
+            });
+        
+        // 退出
+        d3.select('body').selectAll('div.h-bar')
+          .data(data)
+          .exit()
+            .remove();
+         
+        // 选中
+        d3.select('body').selectAll('div.h-bar').filter(function(d, i) {
+          return d;
+        })
+        .classed('selected', true);
+	  	}
+	  	
+	  	/*setInterval(function() {
+	  	  data.shift();
+	  	  data.push(Math.round(Math.random() * 1000));
+	  	  
+	  	  render(data);
+	  	}, 1500);*/
+	  	
+	  	render(data);
+	  </script>
+	</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#container {
+			width: 600px;
+			height: 500px;
+			border: 1px solid #ccc;
+		}
+		path {
+			fill: none;
+			stroke: #aaa;
+			stroke-width: 2;
+		}
+		.domain,
+		.tick line {
+			stroke:gray;
+			stroke-width:1;
+		} 
+	</style>
+</head>
+<body>
+	<div id="container"></div>
+    <script src="../js/d3.js"></script>
+	
+	<!--<script src="http://d3js.org/d3.v3.js"></script>-->
+	<script>
+	
+	var width = 600,
+			height = 500,
+			t_left = 50,
+			t_top = 30,
+			g_width = width - 2 * t_left,
+			g_height = height - 2 * t_top;
+	d3.select('#container')
+	.append('svg')
+	.attr('width', width)
+	.attr('height', height);
+
+	var g = d3.select('svg')
+	.append('g')
+	.style('transform', 'translate('+t_left+'px,'+t_top+'px)');
+
+	var data = [1, 4, 5, 9, 0, 7, 1, 1];
+	var scale_x = d3.scale.linear()
+	.domain([0, data.length])
+	.range([0, g_width]);
+	var scale_y = d3.scale.linear()
+	.domain([0, d3.max(data)])
+	.range([g_height, 0]);
+
+
+	/* 线性图表*/
+ 	var line_generator = d3.svg.line()
+	.x(function(d, i) {
+		return scale_x(i);
+	})
+	.y(function(d) {
+		return scale_y(d);
+	})
+	.interpolate('cardinal');
+	d3.select('g')
+	.append('path')
+	.attr('d', line_generator(data));
+
+	/* 面积图表 */
+	/*var area_generator = d3.svg.area()
+	.x(function(d, i) {
+		return scale_x(i);
+	})
+	.y0(g_height)
+	.y1(function(d) {
+		return scale_y(d);
+	})
+	.interpolate('cardinal')
+                  
+	d3.select('g')
+	.append('path')
+	.attr('d', area_generator(data))
+	.style('fill', 'yellow');
+	*/
+
+
+	var x_axis = d3.svg.axis().scale(scale_x);
+	var y_axis = d3.svg.axis().scale(scale_y).orient('left');
+
+	g.append('g')
+	.call(x_axis)
+	.style('transform', 'translate(0, '+g_height+'px)');
+
+	g.append('g')
+	.call(y_axis)
+	.append('text')
+	.text('price($)')
+	.style('transform', 'rotate(-90deg)')
+	.attr('text-anchor', 'end')
+	.attr('dy', '1em');
+	</script>
+</body>
+</html>

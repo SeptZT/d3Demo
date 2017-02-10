@@ -1,0 +1,115 @@
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>柱状图</title>
+		<style>
+			#container {
+				width: 600px;
+				height: 500px;
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			
+		</div>
+		<script src="../js/d3.js"></script>
+		<!--<script src="http://d3js.org/d3.v3.js"></script>--> 
+		<script>
+			/*var	bar_height = 50,
+					bar_padding = 10,
+					svg_width = 600,
+					data = [10, 4, 7, 9, 27, 2, 1, 5],
+					svg_height = (bar_padding + bar_height) * data.length;
+
+			var svg = d3.select('#container')
+			.append('svg')
+			.attr({
+				'width': svg_width,
+				'height': svg_height
+			});
+
+			var scale_x = d3.scale.linear()
+			.domain([0, d3.max(data)])
+			.range([0, svg_width]);
+
+			var bar = svg.selectAll('g')
+				.data(data)
+				.enter()
+				.append('g')
+				.attr('transform', function(d, i) {
+					return 'translate(0, ' + i * (bar_height + bar_padding) + ')'; 
+				});
+
+			var rect = bar.append('rect')
+			.attr({
+				'width': function(d) { return scale_x(d); },
+				'height': bar_height
+			})
+			.style('fill', 'red');
+
+			bar.append('text')
+			.text(function(d) {
+				return d;
+			})
+			.attr({
+				'x': function(d) {
+					return scale_x(d);
+				},
+				'y': bar_height / 2,
+				'text-anchor': 'end'
+			})*/
+
+			var	bar_width = 50,
+					bar_padding = 10,
+					svg_height = 500,
+					data = [10, 4, 7, 9, 27, 2, 1, 5],
+					svg_width = (bar_padding + bar_width) * data.length;
+
+			var svg = d3.select('#container')
+			.append('svg')
+			.attr({
+				'height': svg_height,
+				'width': svg_width
+			});
+
+		var scale_y = d3.scale.linear()
+			.domain([0, d3.max(data)])
+			.range([svg_height, 0]);
+
+			var bar = svg.selectAll('g')
+				.data(data)
+				.enter()
+				.append('g')
+				.attr('transform', function(d, i) {
+					return 'translate(' + i * (bar_width + bar_padding) + ', 0)'; 
+				});
+
+			var rect = bar.append('rect')
+			.attr({
+				'y': function(d) { return scale_y(d); },
+				'width': bar_width,
+				'height': function(d) { return svg_height - scale_y(d)}
+			})
+			.style('fill', 'red');
+
+			bar.append('text')
+			.text(function(d) {
+				return d;
+			})
+			.attr({
+				'y': function(d) {
+					return scale_y(d);
+				},
+				'x': bar_width / 2,
+				'dy': 15,
+				'text-anchor': 'middle'
+			})
+
+
+
+		</script>
+	</body>
+	</html>

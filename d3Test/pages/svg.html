@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+		</style>
+	</head>
+	<body>
+
+  <script type="text/javascript">
+  	const num = 1;
+  	const obj = {
+  	  a: 1,
+  	  b: 2
+  	}
+  	const obj1 = Object.freeze({
+      a: 1,
+      b: 2
+    });
+  	obj1.a = 2;
+
+  	
+  	const a = Object.freeze({
+      foo: {b:3},
+      bar: 'world',
+      baz: '!'
+    });
+     a.bar = 'qqq';
+    a.foo.b = 'Goodbye';
+  	console.log(a)
+    
+  </script>
+	</body>
+</html>

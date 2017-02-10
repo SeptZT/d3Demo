@@ -1,0 +1,12 @@
+{
+  'name': 'pc',
+  'weight': '200'
+},
+{
+  'name': 'pc2',
+  'weight': '100'
+},
+{
+  'name': 'pc3',
+  'weight': '400'
+}

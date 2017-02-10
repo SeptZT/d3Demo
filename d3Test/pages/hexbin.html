@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body:before {
+        content: '';
+        display: table;
+      }
+      
+      #container {
+        width: 90%;
+        height: 90%;
+        margin: 20px auto;
+        border: 1px solid #ccc;
+      }
+      
+      .default {
+        fill: url('#grad1');
+        stroke: #000;
+        stroke-width: 2;
+      }
+      
+      .group {
+        stroke: #000;
+        stroke-width: 2;
+        fill: url('#group');
+      }
+      .group text {
+        fill: #fff;
+        stroke: #fff;
+        stroke-width: 1;
+        font-size: 20px;
+        text-anchor: middle;  /* 文本水平居中 */
+        dominant-baseline: middle; /* 文本垂直居中 */
+      }
+      .default:not(.group):hover {
+        fill: url('#gradhover');
+      }
+      
+    </style>
+  </head>
+
+  <body>
+    <div id='container'>
+      
+    </div>
+    
+    <script src="../js/d3.js"></script>
+    <script src="../js/hexbin.js"></script>
+  </body>
+</html>

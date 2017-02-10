@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body:before {
+  content: '';
+  display: table;
+}
+#container {
+  width: 90%;
+  height: 90%;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+}
+polygon{
+  fill:url('#grad');
+  /*fill:rgba(126, 236, 214, 0.560784);*/
+  stroke:#000;
+  stroke-width:2;
+}
+
+</style>
+<body>
+  <div id='container'>    
+    <!--<svg xmlns="http://www.w3.org/2000/svg" style="height: 100%;width: 100%" version="1.1">
+      <polygon points="170,200 185,225.98076211353316" style="fill:lime;stroke:purple;stroke-width:1" />
+    </svg>-->
+  </div>
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src='//d3js.org/d3.v3.min.js'></script>
+<script src='../js/d3.hexbin.min.js'></script>
+<script> 
+
+var x = 0,
+    y = 0,
+    r = 30;
+var svg = d3.select('#container').append('svg')
+    .attr('width', '100%')
+    .attr('height', '100%');
+
+var g = svg.append('g').style('transform', 'translate(-50px, 50px)');
+var html = '<defs>'+
+    '<radialGradient id="grad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">'+
+      '<stop offset="40%" style="stop-color:#000;" />'+   
+      '<stop offset="60%" style="stop-color:#05202F;" />'+
+      '<stop offset="100%" style="stop-color:#177FA4;" />'+
+    '</radialGradient>'+
+    '<radialGradient id="gradhover" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">'+
+      '<stop offset="20%" style="stop-color:#000;" />'+   
+      '<stop offset="50%" style="stop-color:#1F3943;" />'+
+      '<stop offset="100%" style="stop-color:#1DCADF;" />'+
+    '</radialGradient>'+
+  '</defs>';
+
+g.html(html);
+
+var data = [];
+function create() {
+  var r2 = r/2;
+  var r3 = Math.sqrt(3) / 2 * r;
+  var path = (x-r)+','+y+' '+(x-r2)+','+(y+r3)
+    +' '+(x+r2)+','+(y+r3)+' '+(x+r)+','+y
+    +' ' +(x+r2)+','+(y-r3)+' '+(x-r2)+','+(y-r3);
+  
+  return path;
+}
+
+var x_len = parseInt(document.getElementById('container').clientWidth / (r*3) * 2)+2;
+var y_len = parseInt(document.getElementById('container').clientHeight / (r*Math.sqrt(3)))-1;
+
+console.log(x_len, y_len)
+for(var i=0; i<y_len; i++) {
+  var t_x = 0;
+  var t_y = Math.sqrt(3) *i * r; 
+  
+  for(var j=0; j<x_len; j++) {
+    var t_y1 = t_y;
+    t_x += 3/2 * r;
+    if (j % 2) {
+       t_y1 += Math.sqrt(3)/2 * r;
+    }
+    
+    
+    var path = create();
+    g.append('polygon')
+      .attr('points', path)
+      .style('transform', 'translate('+t_x+'px,'+t_y1+'px)');
+  }
+}
+
+$('polygon').on('mouseenter', function(){
+  $(this).css('fill', 'url("#gradhover")');
+}).on('mouseleave', function(){
+  $(this).css('fill', 'url("#grad")');
+})
+
+
+
+
+
+
+</script>
